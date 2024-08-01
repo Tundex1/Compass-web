@@ -1,24 +1,30 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const TraderSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    bio: {
-        type: String,
-        default: '',
-    },
-    performance: {
-        type: Number,
-        default: 0,
-    },
-    trades: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Trade',
-    }],
+  name: {
+    type: String,
+    required: true,
+  },
+  roi: {
+    type: Number,
+    required: true,
+  },
+  risk: {
+    type: String,
+    required: true,
+  },
+  tradingStrategy: {
+    type: String,
+    required: true,
+  },
+  historicalPerformance: {
+    type: Array,
+    default: [],
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-const Trader = mongoose.model('Trader', TraderSchema);
-module.exports = Trader;
+module.exports = mongoose.model("Trader", TraderSchema);

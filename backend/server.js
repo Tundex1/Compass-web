@@ -1,46 +1,49 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const authRoutes = require('./routes/auth');
-const traderRoutes = require('./routes/traders');
-const tradeRoutes = require('./routes/trades');
+// At the top of server.js
+const dotenv = require("dotenv");
+dotenv.config();
+
+const express = require("express");
+const connectDB = require("./config/db");
+const cors = require("cors");
+const dotenv = require("dotenv");
 
 dotenv.config();
 
+// Connect to the database
+connectDB();
+
 const app = express();
 
+// Middlewareconsole.log('MONGO_URI:', process.env.MONGO_URI);
+console.log("JWT_SECRET:", process.env.JWT_SECRET);
 app.use(express.json());
+app.use(cors());
 
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('MongoDB connected'))
-    .catch(err => console.log(err));
+// Routes
+app.use("/api/auth", require("./routes/authRoutes"));
+app.use("/api/traders", require("./routes/traderRoutes"));
 
-app.use('/api/auth', authRoutes);
-app.use('/api/traders', traderRoutes);
-app.use('/api/trades', tradeRoutes);
-
+// Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-const express = require('express');
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const authRoutes = require('./routes/auth');
-const traderRoutes = require('./routes/traders');
-const tradeRoutes = require('./routes/trades');
 
+const dotenv = require("dotenv");
+dotenv.config();
+const dotenv = require("dotenv");
 dotenv.config();
 
-const app = express();
+const express = require("express");
+const connectDB = require("./config/db");
+
+// Connect to the database
+connectDB();
 
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('MongoDB connected'))
-    .catch(err => console.log(err));
+// Your routes and other middleware here
 
-app.use('/api/auth', authRoutes);
-app.use('/api/traders', traderRoutes);
-app.use('/api/trades', tradeRoutes);
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+console.log("MONGO_URI:", process.env.MONGO_URI);
+console.log("JWT_SECRET:", process.env.JWT_SECRET);
